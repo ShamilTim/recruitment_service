@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Список рекрутов</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col pt-5">
+                <h1>Список рекрутов</h1>
+                <div>
+                    <form class="form-inline">
+                      <div class="form-group sm-3 mb-2">
+                        <label for="search" class="sr-only"></label>
+                        <input type="search" name="search" class="form-control" placeholder="Введите Имя/Планету">
+                      </div>
+                      <button type="submit" class="btn btn-outline-primary mb-2">Поиск</button>
+                    </form>
+                </div>
+                <div>
+                  <form method="post">
+                    {% csrf_token %}
+                    <table class="table table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">Имя рекрута</th>
+                          <th scope="col">Планета обитания</th>
+                          <th scope="col">Возраст</th>
+                          <th scope="col">Электронная почта</th>
+                          <th scope="col">Дата регистрации</th>
+                          <th scope="col">Ответ 1</th>
+                          <th scope="col">Ответ 2</th>
+                          <th scope="col">Ответ 3</th>
+                          <th scope="col">Ситх</th>
+                          <th scope="col">Зачисление</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for recruit in recruits %}
+                        <tr>
+                          <td>{{ recruit.name }}</td>
+                          <td>{{ recruit.planet_habitat }}</td>
+                          <td>{{ recruit.age }}</td>
+                          <td>{{ recruit.email }}</td>
+                          <td>{{ recruit.published }}</td>
+                          <td>{{ recruit.answer_1 }}</td>
+                          <td>{{ recruit.answer_2 }}</td>
+                          <td>{{ recruit.answer_3 }}</td>
+                          <td>{% for sith in recruit.sith_set.all %}
+                                {{ sith.sith_name }}
+                              {% endfor %}</td>
+                          <td align="center">
+                              <input type="checkbox" name="shadow_hand" id="{{ recruit.id }}" value="{{ recruit.id }}"/>
+                              <label for="{{ recruit.id }}"></label></td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  <p><input type="submit" class="btn btn-outline-success" value="Принять в Орден" /></p>
+                  </form>
+                </div>
+                <div>
+                    <a href="{% url 'index' %}"><button type="button" class="btn btn-outline-primary">Главная</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

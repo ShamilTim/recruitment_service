@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ current_recruit.name }}Вступительные испытания</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col pt-5">
+                <h1>Вступительные испытания</h1>
+                <p><h3>Вопросы:</h3></p>
+                <div>
+                    <table class="table table-sm">
+                      <tbody>
+                        {% for qq in qqs %}
+                        <tr>
+                          <td>{{ qq.questions }}</td>
+                        {% endfor %}
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                <p><div>(Достаточно ответа: Да / Нет)</div></p>
+                <div>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <p><input type="submit" class="btn btn-outline-success" value="Добавить"></p>
+                    </form>
+                </div>
+                <div>
+                    <a href="{% url 'index' %}"><button type="button" class="btn btn-outline-primary">Главная</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
